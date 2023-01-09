@@ -6,7 +6,7 @@ def fact(n):
     else:
         return n*fact(n-1)
 
-# Création des fonctions linéaires dans le corps
+# Linear function is the right set
 def computeLinear(x,a,b,c,d):
     x = "{0:b}".format(x).zfill(4)
     s0 = (int(a[0])*int(x[0]) + int(b[0])*int(x[1]) + int(c[0])*int(x[2]) + int(d[0])*int(x[3]))%2
@@ -15,7 +15,7 @@ def computeLinear(x,a,b,c,d):
     s3 = (int(a[3])*int(x[0]) + int(b[3])*int(x[1]) + int(c[3])*int(x[2]) + int(d[3])*int(x[3]))%2
     return int(str(s0) + str(s1) + str(s2) + str(s3),base=2)
 
-# Fonction permutation ?
+# L is a permutation?
 def isP(L):
     for i in range(16):
         for j in range(i+1,16):
@@ -23,11 +23,11 @@ def isP(L):
                 return False
     return True
 
-# SBox en base 16
+# Index of a S-box
 def ID(l):
     return sum([l[j]*16**(15-j) for j in range(len(l))])
 
-# Renvoie une liste triée dans l'ordre lexicographique
+# Lexicographical order of a list
 def lexicographicOrder(L):
     lex = [(sum([L[i][j]*16**(15-j) for j in range(len(L[i]))]),i) for i in range(len(L))]
     lex.sort(key=lambda x:x[0])
@@ -36,6 +36,7 @@ def lexicographicOrder(L):
 def addConstant(L,k):
     return [L[i]^k for i in range(len(L))]
 
+# Wire Crossing (4-bit and 4+1-bit)
 def switch(s,x):
     x = "{0:b}".format(x).zfill(4)
     out = [0 for i in range(5)]
@@ -51,6 +52,7 @@ def switch(s,x):
         r += out[3-sw]
     return(int(r,2))
 
+# Pickle functions that save and get data
 def SaveData(data, name):
     with open("U:\Mes Documents\Equivalence Classes\\"+str(name), 'wb') as f:
         pickle.dump(data, f)
@@ -60,9 +62,7 @@ def GetData(name):
         data = pickle.load(f)
     return data
 
-def getPRESENT():
-    return [12,5,6,11,9,0,10,13,3,14,15,8,4,7,1,2]
-
+# Gives the inverse of a permutation
 def inverse(L):
     I = [-1 for i in range(len(L))]
     p = False
@@ -74,6 +74,3 @@ def inverse(L):
     if(p):
         I[I.index(-1)] = 4
     return I
-
-def LL(S,L1,L2):
-    return [switch(L1, S[switch(L2,i)]) for i in range(len(S))]
